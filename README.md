@@ -3,7 +3,7 @@ This Python script is a command-line tool that renames files and folders to be u
 
 The name Fincly is a contraction from '**F**ile **N**ame **CLE**aner'. But spelled with a 'y' instead. It's better that way.
 
-Fincly is intended to be cross-platform, but has not yet been tested on Linux or Mac, only on my own Windows machines. Nor is Fincly prepared to work with semaphores, strange links, special files, device files, etc. But I intend to develop this script to handle more situations as I find them.
+Fincly is intended to be cross-platform, but has not yet been tested on Linux or Mac, only on my own Windows machines... and it works fine on my machine! ;-) Fincly is not prepared to work with semaphores, strange links, special files, device files, etc. But I intend to develop this script to handle more situations as I find them.
 
 ## Decision-making process of fincly.py
 The first step fincly.py does is remove the extension from the filename and clean both filenames and folder names with the same rules. From now on, both are referred as 'the filename', although this means both names of files and folders.
@@ -33,3 +33,4 @@ If no difference in the filenames are found, the file-renaming proceedure will b
 
 ## Command-line help, for reference
 This Python script is a command-line tool that renames files and folders to be universally compliant. This allows the compliant files to be copied to other devices without worry of filename compatability issues. This script will check and possibly rename files and folders provided in the command line arguments, and travers into those folders and possibly rename those found files and folders, too. This script does not alter the contents of files, nor does it ask permission, be sure the answer is 'Yes' when you press Enter.
+
