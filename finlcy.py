@@ -66,9 +66,13 @@ def lcase_them(our_string):
 
 def fincly(our_string):
     if args.remove:
+        tmp_string = our_string
         for del_str in args.remove:
             while del_str in our_string:
                 our_string = our_string.replace(del_str, ' ')
+
+        if len(our_string) < 1 or not any(c.isalnum() for c in our_string):
+            our_string = tmp_string
 
     while '&' in our_string:
         result = our_string.find('&')
@@ -98,6 +102,8 @@ def fincly(our_string):
 
     while '  ' in our_string:
         our_string = ' '.join(our_string.split())
+
+    our_string = our_string.strip()
 
     if args.lowercase:
         our_string = our_string.lower()
@@ -172,18 +178,18 @@ def fincly_root(this_dir):
         if file_exists_case(this_dir):
             count_dirs_saw += 1
             count_dirs_dup += 1
-            print('Cannot rename, skipping  :', orig_dir)
-            print('Directory already exists :', this_dir)
+            print('Cannot rename, skipping :', orig_dir)
+            print('Folder already exists   :', this_dir)
         else:
             count_dirs_saw += 1
             count_dirs_ren += 1
-            print(' Renaming directory :', orig_dir)
-            print('                 to :', this_dir)
+            print('  Renaming folder :', orig_dir)
+            print('              to :', this_dir)
             os.rename(orig_dir, this_dir)
     else:
         count_dirs_saw += 1
         if args.verbose:
-            print(' Skipping directory :', orig_dir)
+            print('  Skipping folder :', orig_dir)
 
     return this_dir
 
@@ -208,13 +214,13 @@ def fincly_dirs(our_dir):
                 if file_exists_case(this_dir_full):
                     count_dirs_saw += 1
                     count_dirs_dup += 1
-                    print('Cannot rename, skipping  :', orig_dir_full)
-                    print('Directory already exists :', this_dir_full)
+                    print('Cannot rename, skipping :', orig_dir_full)
+                    print('Folder already exists   :', this_dir_full)
                 else:
                     count_dirs_saw += 1
                     count_dirs_ren += 1
-                    print('      Renaming directory :', orig_dir_full)
-                    print('                      to :', this_dir_full)
+                    print('  Renaming folder :', orig_dir_full)
+                    print('               to :', this_dir_full)
                     os.rename(orig_dir_full, this_dir_full)
 
                     for index, value in enumerate(dirs):
@@ -262,16 +268,15 @@ if __name__ == '__main__':
             else:
                 print('What is this? :', this_item)
 
-    print('      Files evaluated :', count_file_saw)
-    print('      Files renamed   :', count_file_ren)
-
-    print('Directories evaluated :', count_dirs_saw)
-    print('Directories renamed   :', count_dirs_ren)
+    print('Files found     :', count_file_saw)
+    print('Files renamed   :', count_file_ren)
+    print('Folders found   :', count_dirs_saw)
+    print('Folders renamed :', count_dirs_ren)
 
     if args.verbose:
-        print('Duplicate filenames found   : ', count_file_dup)
-        print('Duplicate directories found : ', count_dirs_dup)
+        print('Duplicate filenames found : ', count_file_dup)
+        print('Duplicate folders found   : ', count_dirs_dup)
     elif count_file_dup > 0:
-        print('NOTE: Duplicate filenames found   : ', count_file_dup)
+        print('NOTE: Duplicate filenames found : ', count_file_dup)
     elif count_dirs_dup > 0:
-        print('NOTE: Duplicate directories found : ', count_dirs_dup)
+        print('NOTE: Duplicate folders found   : ', count_dirs_dup)
