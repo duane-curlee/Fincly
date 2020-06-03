@@ -1,5 +1,13 @@
-from argparse import ArgumentParser
+#
+# Develop by Duane Curlee
+# duane.curlee@gmail.com
+# https://github.com/duane-curlee
+#
+# Check for updates here:
+# https://github.com/duane-curlee/Fincly
+#
 import os
+from argparse import ArgumentParser
 from glob import glob
 
 ill_chars_space = ',"()[]{}~!$%^*;:+='
@@ -14,24 +22,24 @@ def parse_input():
         compliant files to be copied to other devices without worry of\
         filename compatability issues. This script will check and\
         possibly rename files and folders provided in the command line\
-        arguments, and travers into those folders and possibly rename\
-        those found files and folders, too. This script does not alter\
-        the contents of files, nor does it ask permission, be sure the\
-        answer is 'Yes' when you press Enter.")
+        arguments, and traverses into those folders and will possibly\
+        rename those, too. This script does not alter the contents of files.\
+        This script does not ask permission, be sure the answer is 'Yes'\
+        when you press Enter.")
 
     group = parser.add_mutually_exclusive_group()
     group.add_argument('-l', '--lowercase',  action="store_true",
-        help='Make all letters in filenames lowercase')
+        help='Make all letters in filenames and folders lowercase')
     group.add_argument('-c', '--capitalize', action="store_true",
-        help='Capitalize each word in the filename (not the extention)')
+        help='Capitalize each word in the filename (but not the extention)')
     parser.add_argument('-f', '--folder',   action="store_true",
         help='Only check the folder names, do not travers into the folders')
     parser.add_argument('-v', '--verbose',   action="store_true",
         help='Enable verbose mode')
     parser.add_argument('-r', '--remove', nargs = '+', type = str, metavar = 'string',
-        help = 'The string(s) is removed from within all filenames and folders, use quotes')
+        help = 'The string(s) is removed from within all filenames and folder names, use quotes')
     parser.add_argument('-a', '--add', nargs = '+', type = str, metavar = 'word',
-        help = 'Adds words into the lowercase_words list, not permanently')
+        help = 'Adds words into the lowercase_words list, (not permanent)')
     parser.add_argument('items', nargs='+', metavar = 'items',
         help = 'File and/or Folder names (required) for processing, wildcards welcome')
 
@@ -53,7 +61,7 @@ def str_capper(our_string):
 
     return ' '.join(new_list)
 
-def lcase_them(our_string):
+def lowercase_this(our_string):
     for our_word in lowercase_words:
         while our_word in our_string:
             result = our_string.find(our_word)
@@ -108,7 +116,7 @@ def fincly(our_string):
     if args.lowercase:
         our_string = our_string.lower()
     else:
-        our_string = lcase_them(our_string)
+        our_string = lowercase_this(our_string)
 
         if \
         len(our_string) > 4 and \
@@ -130,7 +138,7 @@ def fincly(our_string):
 
     if args.capitalize:
         our_string = str_capper(our_string)
-        our_string = lcase_them(our_string)
+        our_string = lowercase_this(our_string)
 
     return our_string
 
@@ -252,13 +260,13 @@ if __name__ == '__main__':
         for this_item in glob(current_item):
             this_item = os.path.abspath(this_item)
             if os.path.isdir(this_item):
-                if args.folder:
-                    this_item = fincly_root(this_item)
-                elif this_item == our_cwd:
+                if this_item == our_cwd:
                     fincly_dirs(this_item)
                 elif this_item in our_cwd:
                     print('No can do:', this_item,
                         'is within our current working directory')
+                elif args.folder:
+                    this_item = fincly_root(this_item)
                 else:
                     this_item = fincly_root(this_item)
                     fincly_dirs(this_item)
