@@ -12,10 +12,10 @@ from glob import glob
 
 ill_chars_space = ',"()[]{}~!$%^*;:+='
 ill_chars_remove = "'’´`."
-lowercase_words = (' With ', ' As ', ' At ', ' If ', ' Is ', ' The ', ' Of ',
-                   ' Am ', ' A ', ' An ', ' And ', ' Are ', ' On ', ' Or ',
-                   ' It ', ' In ', ' Into ', ' Up ', ' To ', ' From', ' N ',
-                   ' Its ')
+lowercase_words = (' A ', ' Am ', ' An ', ' And ', ' Are ', ' As ',
+                   ' At ', ' From', ' If ', ' In ', ' Into ', ' Is ',
+                   ' It ', ' Its ', ' N ', ' Of ', ' On ', ' Or ',
+                   ' The ', ' This ', ' To ', ' Up ', ' With ')
 
 def parse_input():
     parser = ArgumentParser(description = 'File and folder name cleaner',
