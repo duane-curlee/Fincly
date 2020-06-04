@@ -1,5 +1,5 @@
 #
-# Develop by Duane Curlee
+# Developed by Duane Curlee
 # duane.curlee@gmail.com
 # https://github.com/duane-curlee
 #
@@ -12,7 +12,10 @@ from glob import glob
 
 ill_chars_space = ',"()[]{}~!$%^*;:+='
 ill_chars_remove = "'’´`."
-lowercase_words = (' With ', ' As ', ' At ', ' If ', ' Is ', ' The ', ' Of ', ' Am ', ' A ', ' An ', ' And ', ' Are ', ' On ', ' Or ', ' It ', ' In ', ' Into ', ' Up ', ' To ', ' From', ' N ', ' Its ')
+lowercase_words = (' With ', ' As ', ' At ', ' If ', ' Is ', ' The ', ' Of ',
+                   ' Am ', ' A ', ' An ', ' And ', ' Are ', ' On ', ' Or ',
+                   ' It ', ' In ', ' Into ', ' Up ', ' To ', ' From', ' N ',
+                   ' Its ')
 
 def parse_input():
     parser = ArgumentParser(description = 'File and folder name cleaner',
