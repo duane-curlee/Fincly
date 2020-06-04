@@ -45,44 +45,51 @@ And then any and all spaces bunched together within the filename are
 folded down into just one space character.
 
 This script then checks if the user chose to have all filenames
-lowercased, and then lower-cases them. Then fincly.py will re-attach the
-filename extension, then compare the before and after filenames to check
-for a difference.
+all-lowercase'd, if so, then lower-cases them. Then fincly.py will
+re-attach the file's extension, then compare the before and after
+filenames to check for a difference.
 
-But if the user did not choose the lowercase option, the script will
+But if the user did not choose the all-lowercase option, the script will
 only lowercase the words in the filename that are also in the
-lowercase-words list, and then capitalize the first word of the
+lowercase_words list, and then capitalize the first word of the
 filename.
 
-If the user enabled the **-c** or **--capitalize** option, this scrip
+If the user enabled the **-c** or **--capitalize** option, this script
 will then lastly capitalize each word in the filename, then lowercase
-the words in the filename that are also in the lowercase-words list.
-Then fincly.py will re-attach the filename extension, then compare the
+the words in the filename that are also in the lowercase_words list.
+Then fincly.py will re-attach the file's extension, then compare the
 before and after filenames to check for a difference.
 
 ### What's a duplicate?
 If a difference is found, Fincly then ensure there not a file already
 preset with that new name. If so, Fincly reports this as a duplicate and
-skips the file-renaming proceedure. Be sure to look for duplicates and
+skips the file-renaming procedure. Be sure to look for duplicates and
 resolve them, and run fincly.py again.
 
 If no difference in the filenames are found, the file-renaming
-proceedure will be skipped, of course.
+procedure will be skipped, of course.
 
 ### Why won't Fincly rename my file or folder?
 Besides duplicates, another reason a file or folder won't get renamed
-may be due to the use of the **-r** or **--remove** options. If you
-remove the entire filename and leave nothing to rename the file to,
-Fincly will just ignore the rename and move to the next item without
-reporting the issue. Be sure to change your removal options to confirm
-the issue, and to choose a better filename regardless.
+may be due to the use of the **-r** or **--remove** option. If you
+remove all the words from the file's name, there is nothing to which
+rename the file. Fincly will just ignore the word removal request for
+that file and continue cleaning the file as usual, without reporting the
+issue. Be sure to change your removal options to confirm the issue, and
+to choose a better filename regardless.
+
+## Yet to do
+At this time, Fincly does not handle read-only files. A Python exception
+will be thrown if this script comes across read-only files. I recommend
+resolving the file attributes, then just run this script again.
 
 ## Command-line help, for reference
 This Python script is a command-line tool that renames files and folders
 to be universally compliant. This allows the compliant files to be
-copied to other devices without worry of filename compatability issues.
+copied to other devices without worry of filename compatibility issues.
 This script will check and possibly rename files and folders provided in
-the command line arguments, and travers into those folders and possibly
+the command line arguments, and traverse into those folders and possibly
 rename those found files and folders, too. This script does not alter
 the contents of files, nor does it ask permission, be sure the answer is
 'Yes' when you press Enter.
+
