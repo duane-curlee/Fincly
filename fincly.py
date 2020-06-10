@@ -15,7 +15,7 @@ ill_chars_remove = "'’´`."
 lowercase_words = (' A ', ' Am ', ' An ', ' And ', ' Are ', ' As ',
                    ' At ', ' From', ' If ', ' In ', ' Into ', ' Is ',
                    ' It ', ' Its ', ' N ', ' Of ', ' On ', ' Or ',
-                   ' The ', ' This ', ' To ', ' Up ', ' With ')
+                   ' The ', ' To ', ' Up ', ' With ')
 
 def parse_input():
     parser = ArgumentParser(description = 'File and folder name cleaner',
@@ -75,6 +75,25 @@ def lowercase_this(our_string):
 
     return our_string
 
+def pretty_up_inits(the_string):
+    if len(the_string) > 4 and \
+        the_string[0].isnumeric() and \
+        the_string[1].isnumeric() and \
+        the_string[2].isspace() and \
+        the_string[3].isalpha():
+            the_string = the_string[:3] + the_string[3].upper() + the_string[4:]
+
+    if len(the_string) > 6 and \
+        the_string[0].isnumeric() and \
+        the_string[1].isnumeric() and \
+        the_string[2].isnumeric() and \
+        the_string[3].isnumeric() and \
+        the_string[4].isspace() and \
+        the_string[5].isalpha():
+            the_string = the_string[:5] + the_string[5].upper() + the_string[6:]
+
+    return the_string
+
 def fincly(our_string):
     if args.remove:
         tmp_string = our_string
@@ -121,27 +140,11 @@ def fincly(our_string):
     else:
         our_string = lowercase_this(our_string)
 
-        if \
-        len(our_string) > 4 and \
-        our_string[0].isnumeric and \
-        our_string[1].isnumeric and \
-        our_string[2] == ' ' and \
-        our_string[3].isalpha:
-            our_string = our_string[:3] + our_string[3].upper() + our_string[4:]
-
-        if \
-        len(our_string) > 6 and \
-        our_string[0].isnumeric and \
-        our_string[1].isnumeric and \
-        our_string[2].isnumeric and \
-        our_string[3].isnumeric and \
-        our_string[4] == ' ' and \
-        our_string[5].isalpha:
-            our_string = our_string[:5] + our_string[5].upper() + our_string[6:]
-
     if args.capitalize:
         our_string = str_capper(our_string)
         our_string = lowercase_this(our_string)
+
+    our_string = pretty_up_inits(our_string)
 
     return our_string
 
@@ -169,15 +172,15 @@ def fincly_file(this_file):
         else:
             count_file_ren += 1
             count_file_saw += 1
-            print('  Renaming file :', orig_file)
-            print('             to :', this_file)
+            print('    Renaming file :', orig_file)
+            print('               to :', this_file)
             os.rename(orig_file, this_file)
     else:
         count_file_saw += 1
         if args.verbose:
             print('  Skipping file :', orig_file)
 
-def fincly_root(this_dir):
+def fincly_folder(this_dir):
     global count_dirs_saw, count_dirs_ren, count_dirs_dup
     orig_dir = this_dir
 
@@ -195,7 +198,7 @@ def fincly_root(this_dir):
             count_dirs_saw += 1
             count_dirs_ren += 1
             print('  Renaming folder :', orig_dir)
-            print('              to :', this_dir)
+            print('               to :', this_dir)
             os.rename(orig_dir, this_dir)
     else:
         count_dirs_saw += 1
@@ -204,7 +207,7 @@ def fincly_root(this_dir):
 
     return this_dir
 
-def fincly_dirs(our_dir):
+def fincly_gosub(our_dir):
     global count_dirs_saw, count_dirs_ren, count_dirs_dup
     for root, dirs, files in os.walk(our_dir):
         dirs[:]  = [d for d in dirs  if not d.startswith('.')]
@@ -264,15 +267,15 @@ if __name__ == '__main__':
             this_item = os.path.abspath(this_item)
             if os.path.isdir(this_item):
                 if this_item == our_cwd:
-                    fincly_dirs(this_item)
+                    fincly_gosub(this_item)
                 elif this_item in our_cwd:
                     print('No can do:', this_item,
                         'is within our current working directory')
                 elif args.folder:
-                    this_item = fincly_root(this_item)
+                    this_item = fincly_folder(this_item)
                 else:
-                    this_item = fincly_root(this_item)
-                    fincly_dirs(this_item)
+                    this_item = fincly_folder(this_item)
+                    fincly_gosub(this_item)
 
             elif os.path.isfile(this_item):
                 fincly_file(this_item)
