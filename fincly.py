@@ -75,25 +75,6 @@ def lowercase_this(our_string):
 
     return our_string
 
-def pretty_up_inits(the_string):
-    if len(the_string) > 4 and \
-        the_string[0].isnumeric() and \
-        the_string[1].isnumeric() and \
-        the_string[2].isspace() and \
-        the_string[3].isalpha():
-            the_string = the_string[:3] + the_string[3].upper() + the_string[4:]
-
-    if len(the_string) > 6 and \
-        the_string[0].isnumeric() and \
-        the_string[1].isnumeric() and \
-        the_string[2].isnumeric() and \
-        the_string[3].isnumeric() and \
-        the_string[4].isspace() and \
-        the_string[5].isalpha():
-            the_string = the_string[:5] + the_string[5].upper() + the_string[6:]
-
-    return the_string
-
 def fincly(our_string):
     if args.remove:
         tmp_string = our_string
@@ -144,7 +125,21 @@ def fincly(our_string):
         our_string = str_capper(our_string)
         our_string = lowercase_this(our_string)
 
-    our_string = pretty_up_inits(our_string)
+    if len(our_string) > 4 and \
+        our_string[0].isnumeric() and \
+        our_string[1].isnumeric() and \
+        our_string[2].isspace() and \
+        our_string[3].isalpha():
+            our_string = our_string[:3] + our_string[3].upper() + our_string[4:]
+
+    if len(our_string) > 6 and \
+        our_string[0].isnumeric() and \
+        our_string[1].isnumeric() and \
+        our_string[2].isnumeric() and \
+        our_string[3].isnumeric() and \
+        our_string[4].isspace() and \
+        our_string[5].isalpha():
+            our_string = our_string[:5] + our_string[5].upper() + our_string[6:]
 
     return our_string
 
