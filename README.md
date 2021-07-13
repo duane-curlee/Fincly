@@ -12,15 +12,14 @@ machine! ;-) Fincly is not prepared to work with semaphores, strange
 links, special files, device files, etc. But I intend to develop this
 script to handle more situations as I find them.
 
-## Decision-making process of fincly.py
-The first step fincly.py does is remove the extension from the filename
-and clean both filenames and folder names with the same rules. From now
+## Decision-making process of Fincly
+The first step is to remove the extension from the filename and
+clean both filenames and folder names with the same rules. From now
 on, both are referred as 'the filename', although this means both names
 of files and folders.
 
 The first rule is to remove strings from the filenames the user
-specified using the **-r** or **--remove** option. The string is
-replaced with a space.
+specified using the **-r** or **--remove** option. The gap is closed.
 
 Secondly, the ampersand character (&) is changed into the word 'and',
 with a space before and after. The at-sign (@) is changed into the word
@@ -31,14 +30,7 @@ found, is changed into just a space.
 Each of these characters are changed into a space:
 
 ```
-, " ( ) [ ] { } ~ ! $ % ^ * ; : + =
-```
-
-And each of these characters found are removed from the filename, not
-changed to a space, the gap is simply closed:
-
-```
-' ’ ´ ` .
+, " ( ) [ ] { } ~ ! $ % ^ * ; : + = ' ’ ´ ` .
 ```
 
 And then any and all spaces bunched together within the filename are
@@ -54,20 +46,14 @@ only lowercase the words in the filename that are also in the
 lowercase_words list, and then capitalize the first word of the
 filename.
 
-If the user enabled the **-c** or **--capitalize** option, this script
-will then lastly capitalize each word in the filename, then lowercase
-the words in the filename that are also in the lowercase_words list.
-Then fincly.py will re-attach the file's extension, then compare the
-before and after filenames to check for a difference.
-
 ### What's a duplicate?
-If a difference is found, Fincly then ensure there not a file already
+If Fincly decides to change a filename, it first ensures there not a file already
 preset with that new name. If so, Fincly reports this as a duplicate and
 skips the file-renaming procedure. Be sure to look for duplicates and
 resolve them, and run fincly.py again.
 
-If no difference in the filenames are found, the file-renaming
-procedure will be skipped, of course.
+If no change in the filenames is needed, of course the file-renaming
+procedure will be skipped.
 
 ### Why won't Fincly rename my file or folder?
 Besides duplicates, another reason a file or folder won't get renamed
